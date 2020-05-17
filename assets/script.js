@@ -46,7 +46,7 @@ $(document).ready(function () {
             }
             $("#today").empty();
 
-            var title = $("<h2>").addClass("card-title").text(data.name + "" + (new Date().toLocaleDateString() + ""));
+            var title = $("<h2>").addClass("card-title").text(data.name + " (" + new Date().toLocaleDateString() + ")");
             var img = $("<img>").attr("src", "https://openweathermap.org/img/w/" + data.weather[0].icon + "png");
             var card = $("<div>").addClass("card");
             var CardBody = $("<div>").addClass("card-body");
@@ -79,6 +79,9 @@ $(document).ready(function () {
                 CardBody.append(uvIndex);
                 $("#today .card-body").append(uvIndex.append(btn));
             });
+
+
+            title.append(img);
             CardBody.append(title, temp, humid, wind);
             card.append(CardBody);
             $("#today")
@@ -96,6 +99,7 @@ $(document).ready(function () {
             for (var i = 0; i < data.list.length; i++) {
 
                 if (data.list[i].dt_txt.indexOf("15:00:00") !== -1) {
+                    
                     var fiveDay = $("<h3>").addClass("card-title").text(new Date(data.list[i].dt_txt).toLocaleDateString());
                     var fiveIMG = $("<img>").attr("src", "https://openweathermap.org/img/w/" + data.list[i].weather[0].icon + "png");
                     var fiveCards = $("<div>").addClass("card bg-primary text-white");
