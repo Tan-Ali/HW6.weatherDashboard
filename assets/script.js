@@ -5,19 +5,21 @@ $(document).ready(function (){
         $("#citySearch").val("");
         // need to call weather function
         weatherForecast(searchValue);
-        weatherFunction(searchValue)
+        weatherFunction(searchValue);
 
         
     });
+   
+    
     // Get local storage if any
-    var cityHistory = JSON.parse(localStorage.getItem("cityHistory")) || [];
+    var history = JSON.parse(localStorage.getItem("history")) || [];
 
-    if (cityHistory.length > 0) {
-        weatherFunction(cityHistory[cityHistory.length]);
+    if (history.length > 0) {
+        weatherFunction(history[history.length - 1]);
     }
     // Made row for each city searched for
-    for (var i = 0; i < cityHistory.length; i++) {
-        createRow(cityHistory[i])
+    for (var i = 0; i < history.length; i++) {
+        createRow(history[i]);
     }
 
 
@@ -34,12 +36,12 @@ $(document).ready(function (){
     function weatherFunction(searchValue) {
     $.ajax({
         method: "GET",
-        queryURL: "https://api.openweathermap.org/data/2.5/weather?=" + searchValue + "&appid=973fe31b877852d30bc224eba51b5df1",
+        queryURL: "https://api.openweathermap.org/data/2.5/weather?=" + searchValue + "&appid=973fe31b877852d30bc224eba51b5df1&units=imperial",
 
     }).then(function(data){
-        if (cityHistory.indexOf(searchValue) === -1) {
-            cityHistory.push(searchValue);
-            localStorage.setItem("cityHistory", JSON.stringify(history));
+        if (history.indexOf(searchValue) === -1) {
+            history.push(searchValue);
+            localStorage.setItem("history", JSON.stringify(history));
             createRow(searchValue);
         }
         $("#todaysWeather").empty();
@@ -56,7 +58,7 @@ $(document).ready(function (){
 
         $.ajax({
             method: "GET",
-            queryURL: "https://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon" + lon + "&appid=973fe31b877852d30bc224eba51b5df1",
+            queryURL: "https://api.openweathermap.org/data/2.5/uvi?appid=973fe31b877852d30bc224eba51b5df1&lat=" + lat + "&lon=" + lon,
 
         }).then(function (response) {
 
@@ -86,7 +88,7 @@ $(document).ready(function (){
     function weatherForecast(searchValue) {
         $.ajax({
             method: "GET",
-            queryURL: "https://api.openweathermap.org/data/2.5/forecast/daily?q=" + searchValue + "&units=imperial&cnt=5&appid=973fe31b877852d30bc224eba51b5df1",
+            queryURL: "https://api.openweathermap.org/data/2.5/forecast/forecast?q=" + searchValue + "&appid=973fe31b877852d30bc224eba51b5df1&units=imperial",
         }).then(function (data) {
             console.log(data);
             $("#forecast").html("<h2 class=\"mt-3\">5-Day Forecast:</h2").append("div class=\"row\">");
