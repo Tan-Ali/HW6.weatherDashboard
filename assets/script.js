@@ -49,7 +49,7 @@ $(document).ready(function () {
             var title = $("<h2>").addClass("card-title").text(data.name + " (" + new Date().toLocaleDateString() + ")");
             var img = $("<img>").attr("src", "https://openweathermap.org/img/w/" + data.weather[0].icon + "png");
             var card = $("<div>").addClass("card");
-            var CardBody = $("<div>").addClass("card-body");
+            var cardBody = $("<div>").addClass("card-body");
             var wind = $("<p>").addClass("card-text").text("Wind: " + data.wind.speed + " MPH");
             var humid = $("<p>").addClass("card-text").text("Humidity: " + data.main.humidity + "%");
             var temp = $("<p>").addClass("card-text").text("Temperatur: " + data.main.temp + " Fahrenheit")
@@ -76,14 +76,14 @@ $(document).ready(function () {
                     btn.addClass("btn-danger");
                 }
 
-                CardBody.append(uvIndex);
+                cardBody.append(uvIndex);
                 $("#today .card-body").append(uvIndex.append(btn));
             });
 
 
             title.append(img);
-            CardBody.append(title, temp, humid, wind);
-            card.append(CardBody);
+            cardBody.append(title, temp, humid, wind);
+            card.append(cardBody);
             $("#today")
             console.log(data);
         });
