@@ -4,10 +4,8 @@ $(document).ready(function () {
         var searchTerm = $("#search-value").val();
         $("#search-value").val("");
         // need to call weather function
-        weatherForecast(searchTerm);
         weatherFunction(searchTerm);
-
-
+        weatherForecast(searchTerm);
     });
 
 
@@ -23,7 +21,6 @@ $(document).ready(function () {
     }
 
 
-
     function createRow(text) {
         var listItem = $("<li>").addClass("list-group-item").text(text);
         $(".history").append(listItem);
@@ -31,7 +28,7 @@ $(document).ready(function () {
     $(".history").on("click", "li", function () {
         weatherFunction($(this).text());
         weatherForecast($(this).text());
-    })
+    });
 
     function weatherFunction(searchTerm) {
         $.ajax({
@@ -48,11 +45,12 @@ $(document).ready(function () {
 
             var title = $("<h2>").addClass("card-title").text(data.name + " (" + new Date().toLocaleDateString() + ")");
             var img = $("<img>").attr("src", "https://openweathermap.org/img/w/" + data.weather[0].icon + "png");
+
             var card = $("<div>").addClass("card");
             var cardBody = $("<div>").addClass("card-body");
             var wind = $("<p>").addClass("card-text").text("Wind: " + data.wind.speed + " MPH");
             var humid = $("<p>").addClass("card-text").text("Humidity: " + data.main.humidity + "%");
-            var temp = $("<p>").addClass("card-text").text("Temperatur: " + data.main.temp + " Fahrenheit")
+            var temp = $("<p>").addClass("card-text").text("Temperatur: " + data.main.temp + " Fahrenheit");
             var lon = data.coord.lon;
             var lat = data.coord.lat;
 
@@ -80,11 +78,11 @@ $(document).ready(function () {
                 $("#today .card-body").append(uvIndex.append(btn));
             });
 
-
+            //merge and add page
             title.append(img);
             cardBody.append(title, temp, humid, wind);
             card.append(cardBody);
-            $("#today")
+            $("#today").append(card);
             console.log(data);
         });
     }
@@ -92,9 +90,10 @@ $(document).ready(function () {
         $.ajax({
             method: "GET",
             queryURL: "https://api.openweathermap.org/data/2.5/forecast?q=" + searchTerm + "&appid=973fe31b877852d30bc224eba51b5df1&units=imperial",
+        
         }).then(function (data) {
             console.log(data);
-            $("#forecast").html("<h2 class=\"mt-3\">5-Day Forecast:</h2").append("<div class=\"row\">");
+            $("#forecast").html("<h4 class=\"mt-3\">5-Day Forecast:</h4>").append("<div class=\"row\">");
 
             for (var i = 0; i < data.list.length; i++) {
 
@@ -119,5 +118,5 @@ $(document).ready(function () {
         })
     }
 
-})
+});
 
