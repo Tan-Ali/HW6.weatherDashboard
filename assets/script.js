@@ -86,7 +86,7 @@ $(document).ready(function () {
             console.log(data);
         });
     }
-    
+
     function weatherForecast(searchTerm) {
         $.ajax({
             method: "GET",
@@ -100,23 +100,23 @@ $(document).ready(function () {
 
                 if (data.list[i].dt_txt.indexOf("15:00:00") !== -1) {
 
-                    var fiveDay = $("<h3>").addClass("card-title").text(new Date(data.list[i].dt_txt).toLocaleDateString());
-                    var fiveIMG = $("<img>").attr("src", "https://openweathermap.org/img/w/" + data.list[i].weather[0].icon + "png");
-                    var fiveCards = $("<div>").addClass("card bg-primary text-white");
-                    var fiveBodyCard = $("<div>").addClass("card-body p-2")
-                    var fiveHumidity = $("<p>").addClass("card-text").text("Humidity: " + data.list[i].main.humidity + " %");
-                    var fiveTemp = $("<p>").addClass("card-text").text("Temperature: " + data.list[i].main.temp + " Farhenheit");
+                    var titleFive = $("<h3>").addClass("card-title").text(new Date(data.list[i].dt_txt).toLocaleDateString());
+                    var imgFive = $("<img>").attr("src", "https://openweathermap.org/img/w/" + data.list[i].weather[0].icon + ".png");
+                    var cardFive = $("<div>").addClass("card bg-primary text-white");
+                    var cardBodyFive = $("<div>").addClass("card-body p-2")
+                    var humidFive = $("<p>").addClass("card-text").text("Humidity: " + data.list[i].main.humidity + " %");
+                    var tempFive = $("<p>").addClass("card-text").text("Temperature: " + data.list[i].main.temp + " °F");
 
-                    fiveDay.append(fiveIMG);
-                    fiveBodyCard.append(fiveDay, fiveTemp, fiveHumidity);
-                    fiveCards.append(fiveBodyCard);
-                    $(".card-deck").append(fiveCards);
+                    titleFive.append(imgFive);
+                    cardBodyFive.append(titleFive, tempFive, humidFive);
+                    cardFive.append(cardBodyFive);
+                    $(".card-deck").append(cardFive);
 
 
                 }
 
             }
-        })
+        });
     }
 
 });
