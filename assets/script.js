@@ -1,8 +1,8 @@
 $(document).ready(function () {
     // Search for city
     $("#search-button").on("click", function () {
-        var searchTerm = $("#searchValue").val();
-        $("#searchValue").val("");
+        var searchTerm = $("#search-value").val();
+        $("#search-value").val("");
         // need to call weather function
         weatherForecast(searchTerm);
         weatherFunction(searchTerm);
@@ -99,7 +99,7 @@ $(document).ready(function () {
             for (var i = 0; i < data.list.length; i++) {
 
                 if (data.list[i].dt_txt.indexOf("15:00:00") !== -1) {
-                    
+
                     var fiveDay = $("<h3>").addClass("card-title").text(new Date(data.list[i].dt_txt).toLocaleDateString());
                     var fiveIMG = $("<img>").attr("src", "https://openweathermap.org/img/w/" + data.list[i].weather[0].icon + "png");
                     var fiveCards = $("<div>").addClass("card bg-primary text-white");
