@@ -1,8 +1,8 @@
 $(document).ready(function () {
     // Search for city
-    $("#searchButton").on("click", function () {
-        var searchTerm = $("#citySearch").val();
-        $("#citySearch").val("");
+    $("#search-button").on("click", function () {
+        var searchTerm = $("#searchValue").val();
+        $("#searchValue").val("");
         // need to call weather function
         weatherForecast(searchTerm);
         weatherFunction(searchTerm);
