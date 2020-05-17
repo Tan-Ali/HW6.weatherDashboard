@@ -1,9 +1,10 @@
 $(document).ready(function () {
-    // Search for city
+    //search for city
     $("#search-button").on("click", function () {
+        //grab value in input search-value.
         var searchTerm = $("#search-value").val();
+        //empty input field.
         $("#search-value").val("");
-        // need to call weather function
         weatherFunction(searchTerm);
         weatherForecast(searchTerm);
     });
@@ -25,15 +26,19 @@ $(document).ready(function () {
         var listItem = $("<li>").addClass("list-group-item").text(text);
         $(".history").append(listItem);
     }
+
     $(".history").on("click", "li", function () {
         weatherFunction($(this).text());
         weatherForecast($(this).text());
     });
 
+
     function weatherFunction(searchTerm) {
+
         $.ajax({
-            method: "GET",
-            queryURL: "https://api.openweathermap.org/data/2.5/weather?q=" + searchTerm + "&appid=973fe31b877852d30bc224eba51b5df1&units=imperial",
+            type: "GET",
+            url: "https://api.openweathermap.org/data/2.5/weather?q=" + searchTerm + "&appid=973fe31b877852d30bc224eba51b5df1&units=imperial",
+          
 
         }).then(function (data) {
             if (history.indexOf(searchTerm) === -1) {
@@ -43,28 +48,31 @@ $(document).ready(function () {
             }
             $("#today").empty();
 
-            var title = $("<h2>").addClass("card-title").text(data.name + " (" + new Date().toLocaleDateString() + ")");
-            var img = $("<img>").attr("src", "https://openweathermap.org/img/w/" + data.weather[0].icon + "png");
+            var title = $("<h3>").addClass("card-title").text(data.name + " (" + new Date().toLocaleDateString() + ")");
+            var img = $("<img>").attr("src", "https://openweathermap.org/img/w/" + data.weather[0].icon + ".png");
+
 
             var card = $("<div>").addClass("card");
             var cardBody = $("<div>").addClass("card-body");
-            var wind = $("<p>").addClass("card-text").text("Wind: " + data.wind.speed + " MPH");
+            var wind = $("<p>").addClass("card-text").text("Wind Speed: " + data.wind.speed + " MPH");
             var humid = $("<p>").addClass("card-text").text("Humidity: " + data.main.humidity + "%");
-            var temp = $("<p>").addClass("card-text").text("Temperatur: " + data.main.temp + " Fahrenheit");
+            var temp = $("<p>").addClass("card-text").text("Temperature: " + data.main.temp + " °F");
+
             var lon = data.coord.lon;
             var lat = data.coord.lat;
 
             $.ajax({
-                method: "GET",
-                queryURL: "https://api.openweathermap.org/data/2.5/uvi?appid=973fe31b877852d30bc224eba51b5df1&lat=" + lat + "&lon=" + lon,
-
+                type: "GET",
+                url: "https://api.openweathermap.org/data/2.5/uvi?appid=973fe31b877852d30bc224eba51b5df1&lat=" + lat + "&lon=" + lon,
+               
             }).then(function (response) {
-
                 console.log(response);
 
+                
                 var uvResponse = response.value;
                 var uvIndex = $("<p>").addClass("card-text").text("UV Index: ");
                 var btn = $("<span>").addClass("btn btn-sm").text(uvResponse);
+
 
                 if (uvResponse < 3) {
                     btn.addClass("btn-success");
@@ -76,6 +84,7 @@ $(document).ready(function () {
 
                 cardBody.append(uvIndex);
                 $("#today .card-body").append(uvIndex.append(btn));
+
             });
 
             //merge and add page
@@ -89,9 +98,9 @@ $(document).ready(function () {
 
     function weatherForecast(searchTerm) {
         $.ajax({
-            method: "GET",
-            queryURL: "https://api.openweathermap.org/data/2.5/forecast?q=" + searchTerm + "&appid=973fe31b877852d30bc224eba51b5df1&units=imperial",
-        
+            type: "GET",
+            url: "https://api.openweathermap.org/data/2.5/forecast?q=" + searchTerm + "&appid=973fe31b877852d30bc224eba51b5df1&units=imperial",
+          
         }).then(function (data) {
             console.log(data);
             $("#forecast").html("<h4 class=\"mt-3\">5-Day Forecast:</h4>").append("<div class=\"row\">");
@@ -102,22 +111,21 @@ $(document).ready(function () {
 
                     var titleFive = $("<h3>").addClass("card-title").text(new Date(data.list[i].dt_txt).toLocaleDateString());
                     var imgFive = $("<img>").attr("src", "https://openweathermap.org/img/w/" + data.list[i].weather[0].icon + ".png");
+
+                   
                     var cardFive = $("<div>").addClass("card bg-primary text-white");
-                    var cardBodyFive = $("<div>").addClass("card-body p-2")
-                    var humidFive = $("<p>").addClass("card-text").text("Humidity: " + data.list[i].main.humidity + " %");
+                    var cardBodyFive = $("<div>").addClass("card-body p-2");
+                    var humidFive = $("<p>").addClass("card-text").text("Humidity: " + data.list[i].main.humidity + "%");
                     var tempFive = $("<p>").addClass("card-text").text("Temperature: " + data.list[i].main.temp + " °F");
 
+                    
                     titleFive.append(imgFive);
                     cardBodyFive.append(titleFive, tempFive, humidFive);
                     cardFive.append(cardBodyFive);
                     $(".card-deck").append(cardFive);
-
-
                 }
-
             }
         });
     }
 
 });
-
