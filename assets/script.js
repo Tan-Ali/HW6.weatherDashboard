@@ -91,7 +91,7 @@ $(document).ready(function (){
             queryURL: "https://api.openweathermap.org/data/2.5/forecast/forecast?q=" + searchValue + "&appid=973fe31b877852d30bc224eba51b5df1&units=imperial",
         }).then(function (data) {
             console.log(data);
-            $("#forecast").html("<h2 class=\"mt-3\">5-Day Forecast:</h2").append("div class=\"row\">");
+            $("#forecast").html("<h2 class=\"mt-3\">5-Day Forecast:</h2").append("<div class=\"row\">");
 
             for (var i = 0; i < data.list.length; i++) {
                 
