@@ -88,7 +88,7 @@ $(document).ready(function () {
     function weatherForecast(searchTerm) {
         $.ajax({
             method: "GET",
-            queryURL: "https://api.openweathermap.org/data/2.5/forecast/forecast?q=" + searchTerm + "&appid=973fe31b877852d30bc224eba51b5df1&units=imperial",
+            queryURL: "https://api.openweathermap.org/data/2.5/forecast?q=" + searchTerm + "&appid=973fe31b877852d30bc224eba51b5df1&units=imperial",
         }).then(function (data) {
             console.log(data);
             $("#forecast").html("<h2 class=\"mt-3\">5-Day Forecast:</h2").append("<div class=\"row\">");
