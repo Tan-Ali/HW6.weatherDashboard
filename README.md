@@ -24,7 +24,7 @@ THEN I am presented with the last searched city forecast
 
 I was able to accomplish all the above acceptable criteria.  I was not able to make the formatting the best.  Below is an exemple of the application and how certain parts work:
 
-EXAMPLE OF CHANGE IN COLOR
+EXAMPLE OF Weather Dashboard
 ![example](assets/Example.gif)
 
 
